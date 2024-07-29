@@ -1,6 +1,6 @@
 package com.deltaecholabs.api.system;
 
-import com.deltaecholabs.api.Roles;
+import com.deltaecholabs.api.Role;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -45,7 +45,7 @@ public class SystemResource {
             description = "Unauthorized",
             content = @Content(mediaType = MediaType.APPLICATION_JSON)
     )
-    @RolesAllowed({Roles.SYSTEM_READ})
+    @RolesAllowed(Role.SYSTEM_READ)
     public Response get() {
         return Response.ok(systemService.findAll()).build();
     }
@@ -70,7 +70,7 @@ public class SystemResource {
             description = "Unauthorized",
             content = @Content(mediaType = MediaType.APPLICATION_JSON)
     )
-    @RolesAllowed({Roles.SYSTEM_READ})
+    @RolesAllowed(Role.SYSTEM_READ)
     public Response getById(@Parameter(name = "systemId", required = true) @PathParam("systemId") int systemId) {
         return systemService.findById(systemId)
                 .map(system -> Response.ok(system).build())
@@ -101,7 +101,7 @@ public class SystemResource {
             description = "Unauthorized",
             content = @Content(mediaType = MediaType.APPLICATION_JSON)
     )
-    @RolesAllowed({Roles.SYSTEM_WRITE})
+    @RolesAllowed(Role.SYSTEM_WRITE)
     public Response post(@NotNull @Valid System system, @Context UriInfo uriInfo) {
         System created = systemService.create(system);
         URI uri = uriInfo.getAbsolutePathBuilder().path(Long.toString(created.systemId())).build();
@@ -143,7 +143,7 @@ public class SystemResource {
             description = "Unauthorized",
             content = @Content(mediaType = MediaType.APPLICATION_JSON)
     )
-    @RolesAllowed({Roles.SYSTEM_WRITE})
+    @RolesAllowed(Role.SYSTEM_WRITE)
     public Response put(@Parameter(name = "systemId", required = true) @PathParam("systemId") int systemId, @NotNull @Valid System system) {
         if (!Objects.equals(systemId, system.systemId())) {
             throw new WebApplicationException("Path variable systemId does not match System.systemId", Response.Status.BAD_REQUEST);
@@ -168,7 +168,7 @@ public class SystemResource {
             description = "Unauthorized",
             content = @Content(mediaType = MediaType.APPLICATION_JSON)
     )
-    @RolesAllowed(Roles.SYSTEM_WRITE)
+    @RolesAllowed(Role.SYSTEM_WRITE)
     public Response delete(@Parameter(name = "systemId", required = true) @PathParam("systemId") int systemId) {
         if (systemService.findById(systemId).isEmpty()) {
             throw new WebApplicationException(String.format("No System found for systemId[%s]", systemId), Response.Status.NOT_FOUND);

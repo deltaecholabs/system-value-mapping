@@ -16,7 +16,7 @@ public class SystemResourceTest {
     public void getAll() {
         given()
                 .when()
-                .get("/api/v1/systems")
+                .get("/v1/systems")
                 .then()
                 .statusCode(200);
     }
@@ -27,13 +27,13 @@ public class SystemResourceTest {
         System saved = given()
                 .contentType(ContentType.JSON)
                 .body(system)
-                .post("/api/v1/systems")
+                .post("/v1/systems")
                 .then()
                 .statusCode(Response.Status.CREATED.getStatusCode())
                 .extract().as(System.class);
         System got = given()
                 .when()
-                .get("/api/v1/systems/{systemId}", saved.systemId())
+                .get("/v1/systems/{systemId}", saved.systemId())
                 .then()
                 .statusCode(Response.Status.OK.getStatusCode())
                 .extract().as(System.class);
@@ -44,7 +44,7 @@ public class SystemResourceTest {
     public void getByIdNotFound() {
         given()
                 .when()
-                .get("/api/v1/systems/{systemId}", 987654321)
+                .get("/v1/systems/{systemId}", 987654321)
                 .then()
                 .statusCode(Response.Status.NOT_FOUND.getStatusCode());
     }
@@ -55,7 +55,7 @@ public class SystemResourceTest {
         System saved = given()
                 .contentType(ContentType.JSON)
                 .body(system)
-                .post("/api/v1/systems")
+                .post("/v1/systems")
                 .then()
                 .statusCode(Response.Status.CREATED.getStatusCode())
                 .extract().as(System.class);
@@ -68,7 +68,7 @@ public class SystemResourceTest {
         given()
                 .contentType(ContentType.JSON)
                 .body(system)
-                .post("/api/v1/systems")
+                .post("/v1/systems")
                 .then()
                 .statusCode(Response.Status.BAD_REQUEST.getStatusCode());
     }
@@ -79,7 +79,7 @@ public class SystemResourceTest {
         System saved = given()
                 .contentType(ContentType.JSON)
                 .body(system)
-                .post("/api/v1/systems")
+                .post("/v1/systems")
                 .then()
                 .statusCode(Response.Status.CREATED.getStatusCode())
                 .extract().as(System.class);
@@ -87,7 +87,7 @@ public class SystemResourceTest {
         given()
                 .contentType(ContentType.JSON)
                 .body(updated)
-                .put("/api/v1/systems/{systemId}", updated.systemId())
+                .put("/v1/systems/{systemId}", updated.systemId())
                 .then()
                 .statusCode(Response.Status.NO_CONTENT.getStatusCode());
     }
@@ -98,7 +98,7 @@ public class SystemResourceTest {
         System saved = given()
                 .contentType(ContentType.JSON)
                 .body(system)
-                .post("/api/v1/systems")
+                .post("/v1/systems")
                 .then()
                 .statusCode(Response.Status.CREATED.getStatusCode())
                 .extract().as(System.class);
@@ -106,7 +106,7 @@ public class SystemResourceTest {
         given()
                 .contentType(ContentType.JSON)
                 .body(updated)
-                .put("/api/v1/systems/{systemId}", updated.systemId())
+                .put("/v1/systems/{systemId}", updated.systemId())
                 .then()
                 .statusCode(Response.Status.BAD_REQUEST.getStatusCode());
     }

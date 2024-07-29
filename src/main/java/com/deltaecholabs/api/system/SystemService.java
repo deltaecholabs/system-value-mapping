@@ -38,11 +38,10 @@ public class SystemService {
     }
 
     @Transactional
-    public System update(@Valid System system) {
+    public void update(@Valid System system) {
         SystemEntity entity = this.systemRepository.findById(system.systemId());
-        entity.name = system.name();
+        this.systemMapper.updateEntity(system, entity);
         this.systemRepository.persist(entity);
-        return this.systemMapper.toDomain(entity);
     }
 
     @Transactional
