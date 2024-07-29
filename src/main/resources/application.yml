@@ -4,6 +4,13 @@ quarkus:
   hibernate-orm:
     database:
       generation: none
+  quinoa:
+    enable-spa-routing: true
+    build-dir: dist/system-value-mapping-ng/browser
+  swagger-ui:
+    always-include: true
+    path: /swagger-ui
+
 
 mp:
   openapi:
