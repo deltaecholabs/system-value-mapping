@@ -1,0 +1,1 @@
+insert into system values (1, 'system1', 'System One');

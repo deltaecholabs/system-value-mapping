@@ -1,1 +1,54 @@
-{}
+quarkus:
+  banner:
+    enabled: false
+  hibernate-orm:
+    database:
+      generation: none
+  swagger-ui:
+    always-include: true
+    operations-sorter: method
+  smallrye-openapi:
+    info-title: system-value-mapping-api
+    info-version: 1.0.0
+
+'%dev':
+  quarkus:
+    log:
+      level: INFO
+      category:
+        "com.deltaecholabs.svm":
+          level: DEBUG
+    hibernate-orm:
+      log:
+        sql: true
+    flyway:
+      migrate-at-start: true
+      locations: db/migration,db/testdata
+
+'%test':
+  quarkus:
+    log:
+      level: INFO
+      category:
+        "com.deltaecholabs.svm":
+          level: DEBUG
+    hibernate-orm:
+      log:
+        sql: true
+    flyway:
+      migrate-at-start: true
+      locations: db/migration,db/testdata
+
+'%prod':
+  quarkus:
+    log:
+      level: INFO
+      category:
+        "com.deltaecholabs.svm":
+          level: INFO
+    hibernate-orm:
+      log:
+        sql: true
+    flyway:
+      migrate-at-start: true
+      locations: db/migration
