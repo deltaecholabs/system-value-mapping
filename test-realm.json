@@ -1,0 +1,38 @@
+{
+  "realm": "svm",
+  "enabled": true,
+  "clients": [
+    {
+      "clientId": "svm-api",
+      "publicClient": true,
+      "clientAuthenticatorType": "client-secret",
+      "secret": "min-api-secret",
+      "directAccessGrantsEnabled": true,
+      "redirectUris": [
+        "*"
+      ],
+      "webOrigins": [
+        "*"
+      ],
+      "attributes": {
+        "post.logout.redirect.uris": "*"
+      }
+    }
+  ],
+  "users": [
+    {
+      "username": "admin",
+      "enabled": true,
+      "credentials": [
+        {
+          "type": "password",
+          "value": "Pass123!"
+        }
+      ],
+      "realmRoles": [
+        "SVM_SYSTEM_READ",
+        "SVM_SYSTEM_WRITE"
+      ]
+    }
+  ]
+}

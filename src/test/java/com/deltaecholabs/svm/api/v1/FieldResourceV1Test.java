@@ -12,19 +12,19 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @QuarkusTest
-public class SystemResourceV1Test {
+public class FieldResourceV1Test {
 
     @Test
-    @TestSecurity(user = TestData.USER_TEST, roles = Role.SVM_SYSTEM_READ)
+    @TestSecurity(user = TestData.USER_TEST, roles = Role.SVM_FIELD_READ)
     public void getAll() {
-        SystemV1[] systems = given()
+        FieldV1[] fields = given()
                 .when()
-                .get("/api/v1/systems")
+                .get("/api/v1/fields")
                 .then()
                 .statusCode(200)
-                .extract().as(SystemV1[].class);
-        assertNotNull(systems);
-        assertTrue(List.of(systems).contains(TestData.SYSTEM_ONE));
+                .extract().as(FieldV1[].class);
+        assertNotNull(fields);
+        assertTrue(List.of(fields).contains(TestData.FIELD_ONE));
     }
 
 }

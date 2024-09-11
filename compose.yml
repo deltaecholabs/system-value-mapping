@@ -1,0 +1,53 @@
+version: '3.8'
+services:
+
+  postgres:
+    container_name: postgres
+    image: postgres:14
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: Pass123!
+      POSTGRES_DB: svm
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - svm
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:22.0.1
+    container_name: keycloak
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: Pass123!
+    command: start-dev --import-realm
+    ports:
+      - "8081:8080"
+    networks:
+      - svm
+    volumes:
+      - ./test-realm.json:/opt/keycloak/data/import/test-realm.json:z
+
+  svm:
+    container_name: svm
+    image: quay.io/deltaecholabs/system-value-mapping:snapshot
+    environment:
+      QUARKUS_DATASOURCE_JDBC_URL: jdbc:postgresql://postgres:5432/svm?loggerLevel=OFF
+      QUARKUS_DATASOURCE_USERNAME: admin
+      QUARKUS_DATASOURCE_PASSWORD: Pass123!
+      QUARKUS_OIDC_AUTH_SERVER_URL: http://keycloak:8081/realms/svm
+    ports:
+      - "8080:8080"
+    networks:
+      - svm
+    depends_on:
+      - postgres
+      - keycloak
+
+volumes:
+  pg_data:
+
+networks:
+  svm:
+    driver: bridge
